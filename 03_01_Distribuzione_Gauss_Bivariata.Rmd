@@ -1,0 +1,58 @@
+---
+title: "MS_2_chapter_3_"
+author: "NikolayNikolaev"
+date: "2023-03-21"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Distribuzione di Gauss Bivariata
+### Generazione di determinazioni dalla Normale Bivariata
+- N (0,0,3,3,2)
+- $\rho_{12}$= 0.67 
+
+```{r cars}
+require(mvtnorm)
+set.seed(1234)
+sigma1 <- matrix(c(3,2,2,3), ncol=2); 
+sigma1
+n <- 10
+x <- rmvnorm(n, 
+             mean=c(0,0),
+             sigma=sigma1
+             )
+x
+cov(x)
+var(x)
+require(skimr)
+skim_without_charts(x)
+
+sd(x[,1])
+
+sd(x[,2])
+```
+
+- Diagramma a dispersione dei valori ottenuti
+
+```{r }
+plot(x[,1],
+x[,2], main = "Realizzazioni da Normale Bivariata  N(0,0,3,3,2)")
+```
+### Curve di livello
+```{r}
+x1 <- x2 <- seq(-10, 10, length = 51)
+dens <- matrix(dmvnorm(expand.grid(x1, x2),
+sigma = sigma1),
+ncol = length(x1))
+contour(x1,
+x2,
+dens,
+main = "Livelli della dist. N(0,0,3,3,2)",
+col="blue",
+xlab = "x1",
+ylab = "x2")
+```
+
